@@ -6,23 +6,25 @@
 </head>
 <body>
   <p>ショッピングカート一覧画面</p>
-	  <form action="item-and-cart.html" th:action="@{/exam06/incart}" method="post">
-	    <div th:each="item,status:${application.itemList}">
-	      <span th:text="${item.name}">dummy</span>
-	      <span th:text="${item.price}">dummy円</span>
-		    <input type="submit" th:name="${status.index}" value="カートへ">
-	    </div>  
-	  </form>  
-  <th:block th:if="${seeion.itemList} != null">
+	  <table>
+	    <tr th:each="item,status:${application.itemList}">
+	      <td th:text="${item.name}">dummy</td>
+	      <td><span th:text="${item.price}">dummy</span>円</td>
+		    <td><a th:href="@{/exam06/incart/__${status.index}__}">
+		      カートへ
+		    </a></td>
+	    </tr>  
+	  </table> 
+  <th:block th:if="${session.cartList != null}">
     <p>商品一覧</p>
 	  <form action="item-and-cart.html" th:action="@{/exam06/delete}" method="post">
-	    <div th:each="item,status:${session.itemList}">
+	    <div th:each="item,status:${session.cartList}">
 	      <span th:text="${item.name}">dummy</span>
 	      <span th:text="${item.price}">dummy円</span>
-	      <input type="submit" th:name="${status.index}" value="削除">
+		    <input type="submit" th:name="${status.index}" value="削除">
 	    </div>  
 	  </form>
-	  <p>合計：<span th:test="${#numbers.formatInteger(totalPrice, 1, 'COMMA')}"></span></p>
+	  <p>合計：<span th:text="${#numbers.formatInteger(totalPrice, 1, 'COMMA')}"></span></p>
   </th:block>
 </body>
 </html>
