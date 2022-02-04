@@ -6,6 +6,8 @@
 </head>
 <body>
   <p>検索結果</p>
-    <span th:each="member:${memberList}" th:text="${member}"></span><br>
+    <div th:each="member:${memberList}">
+      <span th:text="${member.name}"></span><br>
+    </div>
 </body>
 </html>
