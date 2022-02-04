@@ -11,7 +11,7 @@ import com.example.domain.Member;
 import com.example.repository.MemberRepository;
 
 @Controller
-@RequestMapping("exam05")
+@RequestMapping("/exam05")
 public class Exam05Controller {
 	@Autowired
 	private MemberRepository repository;
