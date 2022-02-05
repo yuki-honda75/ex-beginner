@@ -67,7 +67,7 @@ public class ShoppingCartController {
 		cartList.add(item);
 		session.setAttribute("cartList", cartList);
 		
-		return index(model);
+		return "redirect:/exam06";
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -78,6 +78,6 @@ public class ShoppingCartController {
 		
 		session.setAttribute("cartList", cartList);
 		
-		return index(model);
+		return "redirect:/exam06";
 	}
 }
