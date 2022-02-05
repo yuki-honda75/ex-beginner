@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,12 +41,12 @@ public class ShoppingCartController {
 		
 		List<Item> cartList = (List<Item>)session.getAttribute("cartList");
 		int totalPrice = 0;
-		if (cartList != null) {
-			for (Item item : cartList) {
-				totalPrice += item.getPrice();
-			}
-		} else {
-			cartList = null;
+		if (cartList == null) {
+			cartList = new LinkedList<>();
+		}
+		
+		for (Item item : cartList) {
+			totalPrice += item.getPrice();
 		}
 		session.setAttribute("cartList", cartList);
 		
@@ -61,11 +60,22 @@ public class ShoppingCartController {
 		List<Item> itemList = (List<Item>)application.getAttribute("itemList");
 		Item item = itemList.get(index);
 		
-		List<Item> cartList = (List<Item>)session.getAttribute("cartList");
+		LinkedList<Item> cartList = (LinkedList<Item>)session.getAttribute("cartList");
 		if (cartList == null) {
 			cartList = new LinkedList<>();
 		}
 		cartList.add(item);
+		session.setAttribute("cartList", cartList);
+		
+		return index(model);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/delete/{index}")
+	public String delete(@PathVariable("index") Integer index, Model model) {
+		List<Item> cartList = (List<Item>)session.getAttribute("cartList");
+		cartList.remove((int)index);
+		
 		session.setAttribute("cartList", cartList);
 		
 		return index(model);

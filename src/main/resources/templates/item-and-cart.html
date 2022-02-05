@@ -11,19 +11,21 @@
 	      <td th:text="${item.name}">dummy</td>
 	      <td><span th:text="${item.price}">dummy</span>円</td>
 		    <td><a th:href="@{/exam06/incart/__${status.index}__}">
-		      カートへ
+		      <button>カートへ</button>
 		    </a></td>
 	    </tr>  
 	  </table> 
-  <th:block th:if="${session.cartList != null}">
+  <th:block th:if="!${#lists.isEmpty(session.cartList)}">
     <p>商品一覧</p>
-	  <form action="item-and-cart.html" th:action="@{/exam06/delete}" method="post">
-	    <div th:each="item,status:${session.cartList}">
-	      <span th:text="${item.name}">dummy</span>
-	      <span th:text="${item.price}">dummy円</span>
-		    <input type="submit" th:name="${status.index}" value="削除">
-	    </div>  
-	  </form>
+	    <table>
+      <tr th:each="item,status:${session.cartList}">
+        <td th:text="${item.name}">dummy</td>
+        <td><span th:text="${item.price}">dummy</span>円</td>
+        <td><a th:href="@{/exam06/delete/__${status.index}__}">
+          <button>削除</button>
+        </a></td>
+      </tr>  
+    </table>   
 	  <p>合計：<span th:text="${#numbers.formatInteger(totalPrice, 1, 'COMMA')}"></span></p>
   </th:block>
 </body>
